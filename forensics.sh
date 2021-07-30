@@ -37,9 +37,11 @@ find / -type f -perm -444 2> /dev/null > sys_files.txt
 # Se obtienen todos los directorios del sistema
 echo -e "\e[1;34m[*] Generando el listado de directorios del sistema\e[0m"
 find / -type d -perm -111 2> /dev/null > sys_dirs.txt
+# Se vuelcan en un archivo los procesos actuales del sistema
+echo -e "\e[1;34m[*] Volcando los procesos del sistema\e[0m"
+ps -aux > "$pathFiles/procesos"
 # Se copian los historiales de las shells del sistema
 echo -e "\e[1;34m[*] Copiando historiales de las shells de los usuarios del sistema\e[0m"
-ps -aux > "$pathFiles/procesos"
 for i in $home; do cat "/home/${i}/.bash_history" 2> /dev/null > "$pathFiles/${i}_bash_history" | cat "/home/${i}/.zsh_history" 2> /dev/null > "$pathFiles/${i}_zsh_history"; done;
 echo -e "\e[1;34m[*] Copiando configuraciones de red y conexiones\e[0m"
 ip addr > "$pathFiles/configuraciones_red" && netstat -an >> "$pathFiles/configuraciones_red" && dig >> "$pathFiles/configuraciones_red" && route >> "$pathFiles/configuraciones_red"
